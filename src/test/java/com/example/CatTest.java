@@ -19,8 +19,7 @@ public class CatTest {
     }
 
     @Test
-    public void testGetFood() throws Exception {
-        // создаём mock Predator (через Feline)
+    public void testGetFoodReturnsExpectedFood() throws Exception {
         Feline felineMock = mock(Feline.class);
 
         when(felineMock.eatMeat())
@@ -31,8 +30,19 @@ public class CatTest {
         List<String> food = cat.getFood();
 
         assertEquals(List.of("Животные", "Птицы", "Рыба"), food);
+    }
 
-        // проверяем, что метод реально вызвался
+    @Test
+    public void testGetFoodCallsEatMeat() throws Exception {
+        Feline felineMock = mock(Feline.class);
+
+        when(felineMock.eatMeat())
+                .thenReturn(List.of("Животные", "Птицы", "Рыба"));
+
+        Cat cat = new Cat(felineMock);
+
+        cat.getFood();
+
         verify(felineMock, times(1)).eatMeat();
     }
 }
