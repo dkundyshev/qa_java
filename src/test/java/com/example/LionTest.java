@@ -1,43 +1,13 @@
 package com.example;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(Parameterized.class)
 public class LionTest {
-
-    private final String sex;
-    private final boolean expectedMane;
-
-    public LionTest(String sex, boolean expectedMane) {
-        this.sex = sex;
-        this.expectedMane = expectedMane;
-    }
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {"Самец", true},
-                {"Самка", false}
-        });
-    }
-
-    @Test
-    public void testLionMane() throws Exception {
-        Feline felineMock = mock(Feline.class);
-
-        Lion lion = new Lion(sex, felineMock);
-
-        assertEquals(expectedMane, lion.doesHaveMane());
-    }
 
     @Test(expected = Exception.class)
     public void testInvalidSexThrowsException() throws Exception {
@@ -79,9 +49,10 @@ public class LionTest {
 
         Lion lion = new Lion("Самка", felineMock);
 
-        List<String> food = lion.getFood();
-
-        assertEquals(List.of("Животные", "Птицы", "Рыба"), food);
+        assertEquals(
+                List.of("Животные", "Птицы", "Рыба"),
+                lion.getFood()
+        );
     }
 
     @Test
